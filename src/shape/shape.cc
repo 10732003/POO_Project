@@ -62,7 +62,11 @@ bool detect_collision_mix(circle C, square S, double epsil_zero = 0)
         return false;
     }
 
-
-
+    if ((abs(C.center.x-S.center.x) < S.distance/2.0+C.radius+epsil_zero) and 
+    abs(C.center.y-S.center.y) < S.distance/2.0+C.radius+epsil_zero)
+    {
+        return true;
+    }
+    return false;
 }
 
