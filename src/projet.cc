@@ -12,10 +12,14 @@
 int main(int argc, char *argv[])
 { 
     // check if there is an argument
-    if (argc > 1)
+    if (argc <= 1)
     {
-        Simulation simulation = simu::read(std::string(argv[1]));
+        return 0;
     }
+    
+    Simulation simulation(argv[1]);
+    
+    simulation.print();
 
     return 0;
 }
