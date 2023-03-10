@@ -2,7 +2,7 @@
 
 CXX     = g++
 CXXFLAGS = -g -Wall -std=c++11
-CXXFILES = projet.cc message/message.cc simulation/simulation.cc shape/shape.cc 
+CXXFILES = projet.cc message/message.cc simulation/simulation.cc #shape/shape.cc 
 
 OFILES = $(CXXFILES:.cc=.o)
 
@@ -31,4 +31,5 @@ clean:
 # DO NOT DELETE THIS LINE
 projet.o: projet.cc simulation/simulation.h
 message.o: message/message.cc message/message.h
-simulation.o: simulation/simulation.cc
+simulation.o: simulation/simulation.cc simulation/simulation.h \
+ simulation/../message/message.h
