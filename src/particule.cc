@@ -53,7 +53,7 @@ Particule::Particule(double x, double y, double size)
     #endif
 }
 
-bool Particule::is_ok(std::vector<Particule> particule_list)
+bool Particule::is_ok(std::vector<Particule> particule_list) const
 {
     if (shape_.size <= cst::d_particule_min) // control size
     {

@@ -3,7 +3,7 @@
 CXX     = g++
 CXXFLAGS = -g -Wall -std=c++11
 
-CXXFILES = message.cc particule.cc projet.cc shape.cc simulation.cc
+CXXFILES = message.cc particule.cc projet.cc robot.cc shape.cc simulation.cc
 
 OFILES = $(CXXFILES:.cc=.o)
 

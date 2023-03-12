@@ -24,9 +24,9 @@ public:
      * @brief check if a particule is ok with the project directive
      * 
      * @param particule_list std::vector<Paricule>
-     * @return true/false
+     * @return true if it's allright
      */
-    bool is_ok(std::vector<Particule> particule_list);
+    bool is_ok(std::vector<Particule> particule_list) const;
     
 };
 

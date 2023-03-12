@@ -11,6 +11,7 @@
 
 #include <vector>
 #include "particule.h"
+#include "robot.h"
 /**
  * @brief Simulation class is used to represent all the simulation context.
  */
@@ -21,13 +22,23 @@ private:
     std::vector<double> raw_data_input_;
     int nbr_particules_;
     std::vector<Particule> particule_list_;
+    std::vector<Reparateur> reparateur_list_;
+    std::vector<Neutraliseur> neutraliseur_list_;
+
+    Spatial space_robot_;
 
     void get_data_from_file(std::ifstream &file);
     void init_values(std::vector<double> &data_input);
 
 public:
     Simulation(std::string filename);
-    ~Simulation();
+
+    /**
+     * @brief initialize a new simulation
+     * 
+     * @return true ig everything went well
+     */
+    bool init();
 };
 
 

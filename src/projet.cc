@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
     }
     
     Simulation simulation(argv[1]);
+    simulation.init();
 
     return 0;
 }
