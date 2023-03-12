@@ -157,7 +157,7 @@ bool Spatial::neutra_repa_ok(std::vector<Neutraliseur> neutra_list,
                                 repa_list[j].get_circle().center.x,
                                 repa_list[j].get_circle().center.y,
                                 neutra_list[i].get_circle().center.x,
-                                repa_list[i].get_circle().center.y
+                                neutra_list[i].get_circle().center.y
                                 ));
                 return false;
             }
