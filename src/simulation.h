@@ -10,8 +10,7 @@
 #define SIMULATION_H
 
 #include <vector>
-#include "../particule/particule.h"
-
+#include "particule.h"
 /**
  * @brief Simulation class is used to represent all the simulation context.
  */

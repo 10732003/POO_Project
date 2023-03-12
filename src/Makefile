@@ -2,9 +2,18 @@
 
 CXX     = g++
 CXXFLAGS = -g -Wall -std=c++11
-CXXFILES = projet.cc message/message.cc shape/shape.cc simulation/simulation.cc
+
+CXXFILES = message.cc particule.cc projet.cc shape.cc simulation.cc
 
 OFILES = $(CXXFILES:.cc=.o)
+
+# Instruction conditionnelles
+ifeq ($(MAKECMDGOALS), debug)
+	CXXFLAGS += -DDEBUG
+endif
+
+all: prog
+debug: all
 
 # Definition de la premiere regle
 
@@ -23,14 +32,14 @@ depend:
 
 clean:
 	@echo " *** EFFACE MODULES OBJET ET EXECUTABLE ***"
-	@/bin/rm -f *.o *.x *.cc~ *.h~ */*.o */*.x */*.cc~ */*.h~ projet
+	@/bin/rm -f *.o *.x *.cc~ *.h~ */*.o */*.x */*.cc~ */*.h~ projet test
 
 #
 # -- Regles de dependances generees automatiquement
 #
 # DO NOT DELETE THIS LINE
-projet.o: projet.cc simulation/simulation.h
-message.o: message/message.cc message/message.h
-shape.o: shape/shape.cc shape/shape.h
-simulation.o: simulation/simulation.cc simulation/simulation.h \
- simulation/../message/message.h
+message.o: message.cc message.h
+particule.o: particule.cc particule.h shape.h message.h constantes.h
+projet.o: projet.cc simulation.h particule.h shape.h
+shape.o: shape.cc shape.h
+simulation.o: simulation.cc simulation.h particule.h shape.h message.h

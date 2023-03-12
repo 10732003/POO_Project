@@ -9,7 +9,7 @@
 #ifndef CONSTANTES_H
 #define CONSTANTES_H
 
-#include "../shape/shape.h"
+#include "shape.h"
 
 namespace cst
 {

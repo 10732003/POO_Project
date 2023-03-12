@@ -7,13 +7,13 @@
  */
 
 #include <iostream>
-#include "simulation/simulation.h"
+#include "simulation.h"
 
 int main(int argc, char *argv[])
 { 
     #ifdef DEBUG
-    std::cout << "!!! DEBUG flag is define !!! \nPlease enter 'make clean'"
-    << "if you want the standard version\n";
+    std::cout << "!!! DEBUG flag is define !!! \nPlease enter 'make clean' "
+    << "and then 'make' if you want the standard version\n\n";
     #endif
 
     // check if there is an argument

@@ -11,7 +11,8 @@
 #include <sstream>
 #include <vector>
 #include "simulation.h"
-#include "../message/message.h"
+#include "message.h"
+#include "particule.h"
 
 
 namespace
@@ -52,19 +53,22 @@ namespace
             }
             else
             {
-                int int_val = std::stod(value);
+                double int_val = std::stod(value);
                 data_vector.push_back(int_val);
             }
         }
     }
 
     #ifdef DEBUG
+    /**
+     * @brief this is a debug function
+     */
     void print_raw_input(std::vector<double> &raw_data_input_)
     {
         std::cout << "The vector raw_data_input_ contains the following : \n";
         for (size_t i(0); i<raw_data_input_.size(); ++i)
         {
-            std::cout << raw_data_input_[i] << "\n";
+            std::cout << raw_data_input_[i] << " ";
         }
         std::cout << "\n";
     }
@@ -92,7 +96,8 @@ void Simulation::init_values(std::vector<double> &input)
     for (int i(0); i < nbr_particules_; ++i)
     {
         Particule p(input[vector_pos+1], input[vector_pos+2], input[vector_pos+3]);
-        particule_list_.push_back(p);
+        p.is_ok(particule_list_);
+        particule_list_.push_back(p); // important to do is_ok before push back
         vector_pos += 3;
     }
 }
