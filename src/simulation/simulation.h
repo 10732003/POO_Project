@@ -10,6 +10,7 @@
 #define SIMULATION_H
 
 #include <vector>
+#include "../particule/particule.h"
 
 /**
  * @brief Simulation class is used to represent all the simulation context.
@@ -18,21 +19,16 @@ class Simulation
 {
 private:
     std::string filename_;
-    std::vector<int> raw_data_input_;
-    int nbr_particules;
+    std::vector<double> raw_data_input_;
+    int nbr_particules_;
+    std::vector<Particule> particule_list_;
 
-    void error_handler(std::string msg);
     void get_data_from_file(std::ifstream &file);
+    void init_values(std::vector<double> &data_input);
 
 public:
     Simulation(std::string filename);
     ~Simulation();
-    void print(){
-        for (size_t i(0); i < raw_data_input_.size(); ++i)
-        {
-            std::cout << raw_data_input_[i] << "\n";
-        }
-    }
 };
 
 

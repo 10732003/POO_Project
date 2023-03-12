@@ -11,6 +11,11 @@
 
 int main(int argc, char *argv[])
 { 
+    #ifdef DEBUG
+    std::cout << "!!! DEBUG flag is define !!! \nPlease enter 'make clean'"
+    << "if you want the standard version\n";
+    #endif
+
     // check if there is an argument
     if (argc <= 1)
     {
@@ -18,8 +23,6 @@ int main(int argc, char *argv[])
     }
     
     Simulation simulation(argv[1]);
-    
-    simulation.print();
 
     return 0;
 }

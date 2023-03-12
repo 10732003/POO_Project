@@ -14,123 +14,96 @@
 #include "../message/message.h"
 
 
-// -------------------- private --------------------
-
-void Simulation::error_handler(std::string msg)
+namespace
 {
-    std::cout << msg;
-    if (msg == message::success())
+    void error_handler(std::string msg)
     {
-        exit(0);
-    } else {
-        exit(EXIT_FAILURE);
+        std::cout << msg;
+        if (msg == message::success())
+        {
+            exit(0);
+        } else {
+            exit(EXIT_FAILURE);
+        }
     }
-}
 
+    void line_analysis(std::string line, std::vector<double> &data_vector)
+    {
+        if (line[0] == '#')
+        {
+            return;
+        }
+        
+        std::istringstream data(line);
+        std::string value;
+        while (data >> value)
+        {
+            if (value[0] == '#')
+            {
+                break;
+            }
+            if (value == "true")
+            {
+                data_vector.push_back(1.0);
+            }
+            else if (value == "false")
+            {
+                data_vector.push_back(0.0);
+            }
+            else
+            {
+                int int_val = std::stod(value);
+                data_vector.push_back(int_val);
+            }
+        }
+    }
+
+    #ifdef DEBUG
+    void print_raw_input(std::vector<double> &raw_data_input_)
+    {
+        std::cout << "The vector raw_data_input_ contains the following : \n";
+        for (size_t i(0); i<raw_data_input_.size(); ++i)
+        {
+            std::cout << raw_data_input_[i] << "\n";
+        }
+        std::cout << "\n";
+    }
+    #endif //DEBBUG
+
+} // namespace
+
+
+// -------------------- private --------------------
 
 void Simulation::get_data_from_file(std::ifstream& file)
 {
     std::string line;
     while (std::getline(file >> std::ws, line))
     {
-        if (line[0] == '#')
-        {
-            continue;
-        }
-
-        std::istringstream data(line);
-        std::string value;
-        while (data >> value)
-        {
-            bool is_valid_value = true;
-            for (char c : value)
-            {
-                if (!isdigit(c) && c != '-' && c != '+' && c != 'e' && c != 'E')
-                {
-                    is_valid_value = false;
-                    break;
-                }
-            
-
-            if (is_valid_value)
-            {
-                try
-                {
-                    int int_value = std::stoi(value);
-                    raw_data_input_.push_back(int_value);
-                }
-                catch (const std::invalid_argument&)
-                {
-                    if (value == "true")
-                    {
-                        raw_data_input_.push_back(1);
-                    }
-                    else if (value == "false")
-                    {
-                        raw_data_input_.push_back(0);
-                    }
-                    else
-                    {
-                        std::cout << "Invalid value: " << value << "\n";
-                    }
-                }
-            }
-            else
-            {
-                std::cout << "Invalid value: " << value << "\n";
-            }
-        }
+        line_analysis(line, raw_data_input_);
     }
 }
 
-/*
-void Simulation::get_data_from_file(std::ifstream &file)
+void Simulation::init_values(std::vector<double> &input)
 {
-    std::string line;
-    while (std::getline(file >> std::ws, line))
-    {
-        if(line[0] == '#')
-        {
-            continue;
-        }
+    int vector_pos(0);
+    nbr_particules_ = input[vector_pos];
 
-        std::istringstream data(line);
-        std::string value;
-        while (data >> value)
-        {
-            if (value == "true")
-            {
-                raw_data_input_.push_back(1);
-                std::cout << 1 << "\n";
-            }
-            else if (value == "false")
-            {
-                raw_data_input_.push_back(0);
-                std::cout << 0 << "\n";
-            }
-            else
-            {
-                try
-                {
-                    int int_value = std::stoi(value);
-                    raw_data_input_.push_back(int_value);
-                    std::cout << int_value << "\n";
-                }
-                catch (const std::invalid_argument& error)
-                {
-                    std::cout << "invalid argument \n";
-                }
-                
-                
-            }
-        }
+    for (int i(0); i < nbr_particules_; ++i)
+    {
+        Particule p(input[vector_pos+1], input[vector_pos+2], input[vector_pos+3]);
+        particule_list_.push_back(p);
+        vector_pos += 3;
     }
-}*/
+}
 
 // -------------------- public --------------------
 
 Simulation::Simulation(std::string filename): 
-    filename_(filename), raw_data_input_()
+    filename_(filename), 
+    raw_data_input_(),
+    nbr_particules_(0),
+    particule_list_()
 {
     // check if we can open the file
     std::ifstream file(filename);
@@ -138,10 +111,16 @@ Simulation::Simulation(std::string filename):
     {
         error_handler(filename + " does not exist or does not open correctly");
     }
-    
     get_data_from_file(file);
-
     file.close();
+
+    #ifdef DEBUG
+    print_raw_input(raw_data_input_);
+    #endif
+
+    init_values(raw_data_input_);
+
+    error_handler(message::success());
 }
 
 
