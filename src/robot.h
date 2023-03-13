@@ -11,6 +11,7 @@
 
 #include <vector>
 #include "shape.h"
+#include "particule.h"
 
 class Robot
 {
@@ -18,6 +19,10 @@ protected:
     shape::circle shape_;
 public:
     shape::circle get_circle() const;
+    /**
+     * @return true if there is a collision
+     */
+    bool robot_particule_collision(std::vector<Particule> p_vec);
 };
 
 
@@ -31,8 +36,15 @@ private:
     bool breakdown_;
     int k_update_breakdown_;
 public:
+    int get_k_update_breakdown() const;
+
     Neutraliseur(std::vector<double> &input, int &vector_pos);
     bool is_ok(std::vector<Neutraliseur> neutraliseur_list) const;
+    
+    /**
+     * @return true if it's ok (k_update <= nbUpdate)
+     */
+    bool check_k_update_breakdown(int nbUpdate) const;
 };
 
 
@@ -78,6 +90,7 @@ public:
     int get_nbr_reparateur() const;
     int get_nbNs() const;
     int get_nbRs() const;
+    int get_nbUpdate() const;
 
     /**
      * @brief pass the value from a raw data vector to the attributes

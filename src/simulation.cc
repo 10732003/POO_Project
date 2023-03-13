@@ -104,11 +104,13 @@ void Simulation::init_values(std::vector<double> &input)
 
     // manage robots
     space_robot_.init(input, vector_pos); // vector_pos is updated as well here
+    space_robot_.robot_particule_collision(particule_list_);
     
     for (int i(0); i < space_robot_.get_nbRs(); ++i)
     {
         Reparateur robot_rep(input[vector_pos+1], input[vector_pos+2]);
         robot_rep.is_ok(reparateur_list_); // check validity before push_back
+        robot_rep.robot_particule_collision(particule_list_);
         reparateur_list_.push_back(robot_rep);
         vector_pos += 2;
     }
@@ -117,10 +119,17 @@ void Simulation::init_values(std::vector<double> &input)
     {
         Neutraliseur robot_neutra(input, vector_pos); // vector_pos is updated here
         robot_neutra.is_ok(neutraliseur_list_); // check validity before push_back
+        robot_neutra.check_k_update_breakdown(space_robot_.get_nbUpdate());
+        robot_neutra.robot_particule_collision(particule_list_);
         neutraliseur_list_.push_back(robot_neutra);
     }
 
     space_robot_.neutra_repa_ok(neutraliseur_list_, reparateur_list_);
+
+    #ifdef DEBUG
+    std::cout << "Simulation is set up and ready \n";
+    #endif
+
 }
 
 // -------------------- public --------------------

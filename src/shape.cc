@@ -52,7 +52,7 @@ bool shape::detect_collision_mix(circle C, square S, double epsil_zero)
     return false;
 }
 
-bool shape::is_square_inside(square S, double domain_size)
+bool shape::is_inside(square S, double domain_size)
 {
     if (S.center.x + S.size > domain_size) // right limit
     {
@@ -72,4 +72,32 @@ bool shape::is_square_inside(square S, double domain_size)
     }
     
     return true;
+}
+
+bool shape::is_inside(circle C, double domain_size)
+{
+    if (C.center.x + C.radius > domain_size) // right limit
+    {
+        return false;
+    }
+    if (C.center.x - C.radius < -domain_size) // left limit
+    {
+        return false;
+    }
+    if (C.center.y + C.radius > domain_size) // top limit
+    {
+        return false;
+    }
+    if (C.center.y - C.radius < -domain_size) // bottom limit
+    {
+        return false;
+    }
+    
+    return true;
+    /*square s;
+    s.center.x = C.center.x;
+    s.center.y = C.center.y;
+    s.size = 2 * C.radius;
+    return is_inside(s, domain_size);
+    */
 }

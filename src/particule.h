@@ -18,8 +18,9 @@ private:
     shape::square shape_;
 
 public:
-    Particule(double x, double y, double size);
+    shape::square get_shape() const;
 
+    Particule(double x, double y, double size);
     /**
      * @brief check if a particule is ok with the project directive
      * 

@@ -68,7 +68,15 @@ namespace shape
      * @param domain_size double
      * @return true when it is inside
      */
-    bool is_square_inside(square S, double domain_size);
+    bool is_inside(square S, double domain_size);
+        /**
+     * @brief check if a circle is fully inside the domain
+     * 
+     * @param C circle
+     * @param domain_size double
+     * @return true when it is inside
+     */
+    bool is_inside(circle C, double domain_size);
 } // namespace shape
 
 #endif /* SHAPE_H */

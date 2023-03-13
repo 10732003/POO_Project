@@ -40,6 +40,12 @@ namespace
 
 // -------------------- public --------------------
 
+shape::square Particule::get_shape() const
+{
+    return shape_;
+}
+
+
 Particule::Particule(double x, double y, double size)
 {   
     shape::S2d position;
@@ -79,7 +85,7 @@ bool Particule::is_ok(std::vector<Particule> particule_list) const
         }
     }
 
-    if (not shape::is_square_inside(shape_, cst::dmax)) // check if it's inside domain
+    if (not shape::is_inside(shape_, cst::dmax)) // check if it's inside domain
     {
         error_handler(message::particle_outside(
                                             shape_.center.x, 

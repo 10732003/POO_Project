@@ -1,5 +1,3 @@
-1. Robot outside boundaries
-2. k_update check
-3. collision between robot and particule
-
-Reste à passer t09-10-11-12
+- effectuer des tests unitaires de chaque module
+- refactor 2-3 trucs (longeurs fct, get méthode, etc)
+- mettre au point une methode write de simu

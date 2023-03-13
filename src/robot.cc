@@ -36,8 +36,32 @@ shape::circle Robot::get_circle() const
     return shape_;
 }
 
+bool Robot::robot_particule_collision(std::vector<Particule> p_vec)
+{
+    for (size_t i(0); i < p_vec.size(); ++i)
+    {
+        if (shape::detect_collision_mix(shape_, p_vec[i].get_shape()))
+        {
+            error_handler(message::particle_robot_superposition(
+                                                p_vec[i].get_shape().center.x,
+                                                p_vec[i].get_shape().center.y,
+                                                p_vec[i].get_shape().size,
+                                                shape_.center.x,
+                                                shape_.center.y,
+                                                shape_.radius
+                                                ));
+            return true;
+        }
+    }
+    return false;
+}
+
 // -------------------- Neutraliseur --------------------
 
+int Neutraliseur::get_k_update_breakdown() const
+{
+    return k_update_breakdown_;
+}
 
 Neutraliseur::Neutraliseur(std::vector<double> &input, int &vector_pos)
 {
@@ -74,9 +98,29 @@ bool Neutraliseur::is_ok(std::vector<Neutraliseur> neutraliseur_list) const
             return false;
         }
     }
+
+    if (not shape::is_inside(shape_, cst::dmax))
+    {
+        std::string msg = "A neutraliseur is outside";
+        error_handler(msg);
+    }
     return true;
 }
 
+bool Neutraliseur::check_k_update_breakdown(int nbUpdate) const
+{
+    if (k_update_breakdown_ <= nbUpdate)
+    {
+        return true;
+    }
+    error_handler(message::invalid_k_update(
+                                        shape_.center.x, 
+                                        shape_.center.y,
+                                        k_update_breakdown_,
+                                        nbUpdate
+                                        ));
+    return false;
+}
 
 
 // -------------------- Reparateur --------------------
@@ -107,6 +151,11 @@ bool Reparateur::is_ok(std::vector<Reparateur> reparateur_list) const
             return false;
         }
     }
+    if (not shape::is_inside(shape_, cst::dmax))
+    {
+        std::string msg = "A reparateur is outside";
+        error_handler(msg);
+    }
     return true;
 }
 
@@ -117,6 +166,7 @@ int Spatial::get_nbr_neutraliseur() const { return nbNd_ + nbNr_ + nbNs_; }
 int Spatial::get_nbr_reparateur() const { return nbRr_ + nbRs_; }
 int Spatial::get_nbNs() const { return nbNs_; }
 int Spatial::get_nbRs() const { return nbRs_; }
+int Spatial::get_nbUpdate() const { return nbUpdate_; }
 
 void Spatial::init(std::vector<double> &input, int &vector_pos)
 {
@@ -140,6 +190,11 @@ void Spatial::init(std::vector<double> &input, int &vector_pos)
     << ", nbNd = " << nbNd_ << ", nbRr = " << nbRr_ << ", nbRs = " << nbRs_ 
     << "\n";
     #endif
+
+    if (not shape::is_inside(shape_, cst::dmax))
+    {
+        error_handler(message::spatial_robot_ouside(shape_.center.x, shape_.center.y));
+    }
 }
 
 bool Spatial::neutra_repa_ok(std::vector<Neutraliseur> neutra_list, 
