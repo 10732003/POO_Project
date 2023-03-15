@@ -36,7 +36,7 @@ public:
     /**
      * @brief initialize a new simulation
      * 
-     * @return true ig everything went well
+     * @return true if everything went well
      */
     bool init();
 };
