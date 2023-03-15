@@ -37,6 +37,7 @@ private:
     int k_update_breakdown_;
 public:
     int get_k_update_breakdown() const;
+    void set_orientation(double orientation);
 
     Neutraliseur(std::vector<double> &input, int &vector_pos);
     bool is_ok(std::vector<Neutraliseur> neutraliseur_list) const;
@@ -53,7 +54,7 @@ public:
 class Reparateur: public Robot
 {
 private:
-    shape::S2d destination;
+    shape::S2d destination_;
 
 public:
     Reparateur(double x, double y);

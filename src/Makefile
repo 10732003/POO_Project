@@ -40,6 +40,8 @@ clean:
 # DO NOT DELETE THIS LINE
 message.o: message.cc message.h
 particule.o: particule.cc particule.h shape.h message.h constantes.h
-projet.o: projet.cc simulation.h particule.h shape.h
+projet.o: projet.cc simulation.h particule.h shape.h robot.h
+robot.o: robot.cc robot.h shape.h particule.h message.h constantes.h
 shape.o: shape.cc shape.h
-simulation.o: simulation.cc simulation.h particule.h shape.h message.h
+simulation.o: simulation.cc simulation.h particule.h shape.h robot.h \
+ message.h

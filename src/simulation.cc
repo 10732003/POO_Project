@@ -53,8 +53,8 @@ namespace
             }
             else
             {
-                double int_val = std::stod(value);
-                data_vector.push_back(int_val);
+                double double_val = std::stod(value);
+                data_vector.push_back(double_val);
             }
         }
     }

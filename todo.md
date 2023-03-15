@@ -9,7 +9,9 @@ Faut laver la petite planète des particules pas cool
 - [ ] mettre au point une methode write de simu  
 - [ ] ecrire la fonction set pour l'orientation ]-pi,pi]  
 - [ ] passer les lignes du fichier à des fct internes aux class (actuellement dans simu)  
-- [ ] faire les vérifications dans des methodes set  ### In Progress  
+- [ ] faire les vérifications dans des methodes set  ### In Progress
+- [ ] fichier vide -> segmentation fault ?
+- [ ] surcharger une fct collision
 
 ### In Progress
 

@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include "robot.h"
 #include "message.h"
 #include "particule.h"
@@ -62,6 +63,19 @@ int Neutraliseur::get_k_update_breakdown() const
 {
     return k_update_breakdown_;
 }
+
+/**void Neutraliseur::set_orientation(double orientation)
+{
+    while (orientation > M_PI)
+    {
+        orientation -= M_PI;
+    }
+    while (orientation <= M_PI)
+    {
+        orientation += M_PI;
+    }
+    orientation_ = orientation;
+}*/
 
 Neutraliseur::Neutraliseur(std::vector<double> &input, int &vector_pos)
 {
