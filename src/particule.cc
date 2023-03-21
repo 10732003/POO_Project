@@ -59,7 +59,7 @@ Particule::Particule(double x, double y, double size)
     #endif
 }
 
-bool Particule::is_ok(std::vector<Particule> particule_list) const
+bool Particule::is_ok(std::vector<Particule> particule_list, bool ezero_on) const
 {
     if (shape_.size <= cst::d_particule_min) // control size
     {
@@ -73,7 +73,7 @@ bool Particule::is_ok(std::vector<Particule> particule_list) const
 
     for (size_t i(0); i < particule_list.size(); ++i) // control superposition
     {
-        if (shape::detect_collision_square(shape_, particule_list[i].shape_))
+        if (shape::collision(shape_, particule_list[i].shape_, ezero_on))
         {
             error_handler(message::particle_superposition(
                                                 shape_.center.x,

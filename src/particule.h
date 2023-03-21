@@ -21,13 +21,15 @@ public:
     shape::square get_shape() const;
 
     Particule(double x, double y, double size);
+    
     /**
      * @brief check if a particule is ok with the project directive
      * 
      * @param particule_list std::vector<Paricule>
+     * @param ezero_on bool
      * @return true if it's allright
      */
-    bool is_ok(std::vector<Particule> particule_list) const;
+    bool is_ok(std::vector<Particule> particule_list, bool ezero_on) const;
     
 };
 

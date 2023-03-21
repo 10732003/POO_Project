@@ -32,34 +32,17 @@ namespace shape
     };
 
     /**
-     * @brief detect collision between two circles
+     * @brief detect collision between two shapes
      * 
-     * @param C1 circle
-     * @param C2 circle
-     * @param epsil_zero double 
+     * @param S1 shape 1
+     * @param S2 shape 2
+     * @param activate_epsil_zero bool
      * @return true when there is a collision
      */
-    bool detect_collision_circle(circle C1, circle C2, double epsil_zero = 0);
-
-    /**
-     * @brief detect collision between two squares
-     * 
-     * @param S1 square
-     * @param C2 square
-     * @param epsil_zero double 
-     * @return true when there is a collision
-     */
-    bool detect_collision_square(square S1, square S2, double epsil_zero = 0);
-
-    /**
-     * @brief detect collision between a square and a circle
-     * 
-     * @param C circle
-     * @param S square
-     * @param epsil_zero double
-     * @return true when there is a collision
-     */
-    bool detect_collision_mix(circle C, square S, double epsil_zero = 0);
+    bool collision(circle C1, circle C2, bool activate_epsil_zero = true);
+    bool collision(square S1, square S2, bool activate_epsil_zero = true);
+    bool collision(circle C, square S, bool activate_epsil_zero = true);
+    bool collision(square S, circle C, bool activate_epsil_zero = true);
 
     /**
      * @brief check if a square is fully inside the domain
@@ -69,7 +52,8 @@ namespace shape
      * @return true when it is inside
      */
     bool is_inside(square S, double domain_size);
-        /**
+    
+    /**
      * @brief check if a circle is fully inside the domain
      * 
      * @param C circle

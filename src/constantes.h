@@ -28,6 +28,7 @@ namespace cst
     constexpr double d_particule_min(8*shape ::epsil_zero); 
     constexpr unsigned max_update(600);
     constexpr unsigned modulo_update(100);
+    constexpr double PI(3.14159265358979323846);
 } // namespace cst
 
 

@@ -37,11 +37,11 @@ shape::circle Robot::get_circle() const
     return shape_;
 }
 
-bool Robot::robot_particule_collision(std::vector<Particule> p_vec)
+bool Robot::robot_particule_collision(std::vector<Particule> p_vec, bool ezero_on)
 {
     for (size_t i(0); i < p_vec.size(); ++i)
     {
-        if (shape::detect_collision_mix(shape_, p_vec[i].get_shape()))
+        if (shape::collision(shape_, p_vec[i].get_shape(), ezero_on))
         {
             error_handler(message::particle_robot_superposition(
                                                 p_vec[i].get_shape().center.x,
@@ -64,25 +64,26 @@ int Neutraliseur::get_k_update_breakdown() const
     return k_update_breakdown_;
 }
 
-/**void Neutraliseur::set_orientation(double orientation)
+void Neutraliseur::set_orientation(double orientation)
 {
-    while (orientation > M_PI)
+    while (orientation > cst::PI)
     {
-        orientation -= M_PI;
+        orientation -= 2.*cst::PI;
     }
-    while (orientation <= M_PI)
-    {
-        orientation += M_PI;
-    }
+    while (orientation <= -cst::PI)
+     {
+        orientation += 2.*cst::PI;
+     }
+    
     orientation_ = orientation;
-}*/
+}
 
 Neutraliseur::Neutraliseur(std::vector<double> &input, int &vector_pos)
 {
     shape_.radius = cst::r_neutraliseur;
     shape_.center.x = input[vector_pos + 1];
     shape_.center.y = input[vector_pos + 2];
-    orientation_ = input[vector_pos + 3];
+    set_orientation(input[vector_pos + 3]);
     coordination_type_ = input[vector_pos + 4];
     breakdown_ = input[vector_pos + 5];
     k_update_breakdown_ = input[vector_pos + 6];
@@ -101,7 +102,7 @@ bool Neutraliseur::is_ok(std::vector<Neutraliseur> neutraliseur_list) const
 {
     for (size_t i(0); i < neutraliseur_list.size(); ++i) // control superposition
     {
-        if (shape::detect_collision_circle(shape_, neutraliseur_list[i].shape_))
+        if (shape::collision(shape_, neutraliseur_list[i].shape_, false))
         {
             error_handler(message::neutralizers_superposition(
                                                 shape_.center.x,
@@ -154,7 +155,7 @@ bool Reparateur::is_ok(std::vector<Reparateur> reparateur_list) const
 {
     for (size_t i(0); i < reparateur_list.size(); ++i) // control superposition
     {
-        if (shape::detect_collision_circle(shape_, reparateur_list[i].shape_))
+        if (shape::collision(shape_, reparateur_list[i].shape_, false))
         {
             error_handler(message::repairers_superposition(
                                                 shape_.center.x,
@@ -218,9 +219,9 @@ bool Spatial::neutra_repa_ok(std::vector<Neutraliseur> neutra_list,
     {
         for (size_t j(0); j < repa_list.size(); ++j)
         {
-            if (shape::detect_collision_circle( neutra_list[i].get_circle(),
+            if (shape::collision( neutra_list[i].get_circle(),
                                                 repa_list[j].get_circle()
-                                                ))
+                                                ), false)
             {
                 error_handler(message::repairer_neutralizer_superposition(
                                 repa_list[j].get_circle().center.x,

@@ -86,6 +86,11 @@ void Simulation::get_data_from_file(std::ifstream& file)
     {
         line_analysis(line, raw_data_input_);
     }
+    
+    if (raw_data_input_.empty())
+    {
+        error_handler("File is empty");
+    }
 }
 
 void Simulation::init_values(std::vector<double> &input)
@@ -97,20 +102,20 @@ void Simulation::init_values(std::vector<double> &input)
     for (int i(0); i < nbr_particules_; ++i)
     {
         Particule p(input[vector_pos+1], input[vector_pos+2], input[vector_pos+3]);
-        p.is_ok(particule_list_);
+        p.is_ok(particule_list_, false);
         particule_list_.push_back(p); // important to check validity before push_back
         vector_pos += 3;
     }
 
     // manage robots
     space_robot_.init(input, vector_pos); // vector_pos is updated as well here
-    space_robot_.robot_particule_collision(particule_list_);
+    space_robot_.robot_particule_collision(particule_list_, false);
     
     for (int i(0); i < space_robot_.get_nbRs(); ++i)
     {
         Reparateur robot_rep(input[vector_pos+1], input[vector_pos+2]);
         robot_rep.is_ok(reparateur_list_); // check validity before push_back
-        robot_rep.robot_particule_collision(particule_list_);
+        robot_rep.robot_particule_collision(particule_list_, false);
         reparateur_list_.push_back(robot_rep);
         vector_pos += 2;
     }
@@ -120,7 +125,7 @@ void Simulation::init_values(std::vector<double> &input)
         Neutraliseur robot_neutra(input, vector_pos); // vector_pos is updated here
         robot_neutra.is_ok(neutraliseur_list_); // check validity before push_back
         robot_neutra.check_k_update_breakdown(space_robot_.get_nbUpdate());
-        robot_neutra.robot_particule_collision(particule_list_);
+        robot_neutra.robot_particule_collision(particule_list_, false);
         neutraliseur_list_.push_back(robot_neutra);
     }
 

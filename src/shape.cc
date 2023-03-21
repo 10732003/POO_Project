@@ -13,60 +13,79 @@
 // to avoid write shape:: before each shape struct S2D, circle, square
 using namespace shape;
 
-bool shape::detect_collision_circle(circle C1, circle C2, double epsil_zero)
+namespace{
+    double get_value_epszero(bool activate_epsil_zero)
+    {
+        if (activate_epsil_zero)
+        {
+            return epsil_zero;
+        }
+        return 0;
+    }
+}
+
+bool shape::collision(circle C1, circle C2, bool activate_epsil_zero)
 {
-  double D(sqrt(pow(C1.center.x-C2.center.x, 2) + pow(C1.center.y-C2.center.y, 2)));
-  if (D < (C1.radius + C2.radius + epsil_zero))
+    double ezero = get_value_epszero(activate_epsil_zero);
+    double D(sqrt(pow(C1.center.x-C2.center.x, 2) + pow(C1.center.y-C2.center.y, 2)));
+    if (D < (C1.radius + C2.radius + ezero))
     {
         return true;
     }
     return false;
 }
 
-bool shape::detect_collision_square(square S1, square S2, double epsil_zero)
+bool shape::collision(square S1, square S2, bool activate_epsil_zero)
 {
-    if ((abs(S2.center.x-S1.center.x) < S1.size/2.0+S2.size/2.0+epsil_zero) 
-    and (abs(S2.center.y-S1.center.y) < S1.size/2.0+S2.size/2.0+epsil_zero))
+    double ezero = get_value_epszero(activate_epsil_zero);
+    if ((abs(S2.center.x-S1.center.x) < S1.size/2.0+S2.size/2.0+ezero) 
+    and (abs(S2.center.y-S1.center.y) < S1.size/2.0+S2.size/2.0+ezero))
     {
         return true;
     }
     return false;
 }
 
-bool shape::detect_collision_mix(circle C, square S, double epsil_zero)
+bool shape::collision(circle C, square S, bool activate_epsil_zero)
 {
+    double ezero = get_value_epszero(activate_epsil_zero);
     double L(sqrt(pow(abs(C.center.x-S.center.x)-S.size/2.0, 2) + 
     pow(abs(C.center.y-S.center.y)-S.size/2.0, 2)));
     
     if ((abs(C.center.x-S.center.x) > S.size/2.0 and 
-    abs(C.center.y-S.center.y) > S.size/2.0) and (L > C.radius+epsil_zero))
+    abs(C.center.y-S.center.y) > S.size/2.0) and (L > C.radius+ezero))
     {
         return false;
     }
 
-    if ((abs(C.center.x-S.center.x) < S.size/2.0+C.radius+epsil_zero) and 
-    abs(C.center.y-S.center.y) < S.size/2.0+C.radius+epsil_zero)
+    if ((abs(C.center.x-S.center.x) < S.size/2.0+C.radius+ezero) and 
+    abs(C.center.y-S.center.y) < S.size/2.0+C.radius+ezero)
     {
         return true;
     }
     return false;
 }
 
+bool shape::collision(square S, circle C, bool activate_epsil_zero)
+{
+    return collision(C, S, activate_epsil_zero);
+}
+
 bool shape::is_inside(square S, double domain_size)
 {
-    if (S.center.x + S.size > domain_size) // right limit
+    if (S.center.x + S.size/2. > domain_size) // right limit
     {
         return false;
     }
-    if (S.center.x - S.size < -domain_size) // left limit
+    if (S.center.x - S.size/2. < -domain_size) // left limit
     {
         return false;
     }
-    if (S.center.y + S.size > domain_size) // top limit
+    if (S.center.y + S.size/2. > domain_size) // top limit
     {
         return false;
     }
-    if (S.center.y - S.size < -domain_size) // bottom limit
+    if (S.center.y - S.size/2. < -domain_size) // bottom limit
     {
         return false;
     }
@@ -94,10 +113,4 @@ bool shape::is_inside(circle C, double domain_size)
     }
     
     return true;
-    /*square s;
-    s.center.x = C.center.x;
-    s.center.y = C.center.y;
-    s.size = 2 * C.radius;
-    return is_inside(s, domain_size);
-    */
 }

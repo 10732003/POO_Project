@@ -13,6 +13,7 @@
 #include "shape.h"
 #include "particule.h"
 
+
 class Robot
 {
 protected:
@@ -22,7 +23,7 @@ public:
     /**
      * @return true if there is a collision
      */
-    bool robot_particule_collision(std::vector<Particule> p_vec);
+    bool robot_particule_collision(std::vector<Particule> p_vec, bool ezero_on);
 };
 
 
