@@ -219,9 +219,9 @@ bool Spatial::neutra_repa_ok(std::vector<Neutraliseur> neutra_list,
     {
         for (size_t j(0); j < repa_list.size(); ++j)
         {
-            if (shape::collision( neutra_list[i].get_circle(),
-                                                repa_list[j].get_circle()
-                                                ), false)
+            if ( shape::collision(  neutra_list[i].get_circle(),
+                                    repa_list[j].get_circle(),
+                                    false))
             {
                 error_handler(message::repairer_neutralizer_superposition(
                                 repa_list[j].get_circle().center.x,
@@ -232,6 +232,31 @@ bool Spatial::neutra_repa_ok(std::vector<Neutraliseur> neutra_list,
                 return false;
             }
         }
+    }
+    return true;
+}
+
+bool Spatial::data_analysis(int& vector_pos, std::vector<double> input, 
+        std::vector<Particule> &particule_list,
+        std::vector<Reparateur> &reparateur_list,
+        std::vector<Neutraliseur> &neutraliseur_list)
+{    
+    for (int i(0); i < get_nbRs(); ++i)
+    {
+        Reparateur robot_rep(input[vector_pos+1], input[vector_pos+2]);
+        robot_rep.is_ok(reparateur_list); // check validity before push_back
+        robot_rep.robot_particule_collision(particule_list, false);
+        reparateur_list.push_back(robot_rep);
+        vector_pos += 2;
+    }
+
+    for (int i(0); i < get_nbNs(); ++i)
+    {
+        Neutraliseur robot_neutra(input, vector_pos); // vector_pos is updated here
+        robot_neutra.is_ok(neutraliseur_list); // check validity before push_back
+        robot_neutra.check_k_update_breakdown(get_nbUpdate());
+        robot_neutra.robot_particule_collision(particule_list, false);
+        neutraliseur_list.push_back(robot_neutra);
     }
     return true;
 }

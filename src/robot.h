@@ -14,6 +14,8 @@
 #include "particule.h"
 
 
+// -------------------- Robot top class --------------------
+
 class Robot
 {
 protected:
@@ -111,8 +113,21 @@ public:
      */
     bool neutra_repa_ok(std::vector<Neutraliseur> neutra_list, 
                         std::vector<Reparateur> repa_list) const;
+
+    /**
+     * @brief get data from the input vector and create all robots 
+     * 
+     * @param vector_pos int
+     * @param input vector<double>
+     * @param particule_list vector<Particule>
+     * @param reparateur_list vector<Reparateur>
+     * @param neutraliseur_list vector<Neutraliseur>
+     * @return true if everything went well
+     */
+    bool data_analysis(int& vector_pos, std::vector<double> input, 
+        std::vector<Particule> &particule_list,
+        std::vector<Reparateur> &reparateur_list,
+        std::vector<Neutraliseur> &neutraliseur_list);
 };
-
-
 
 #endif /* ROBOT_H */
