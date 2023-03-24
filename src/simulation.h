@@ -1,8 +1,8 @@
 /**
  * @file simulation.h
- * @author E.Dutruy 355726
+ * @author J.Ropars 364156 and E.Dutruy 355726
  * @date 2023-03-07
- * @version 0.1
+ * @version Rendu1
  * @brief simulation module interface
  */
 

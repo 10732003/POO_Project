@@ -1,3 +1,6 @@
+# J.Ropars 364156 and E.Dutruy 355726
+# Rendu1
+
 # Definitions de macros
 
 CXX     = g++
