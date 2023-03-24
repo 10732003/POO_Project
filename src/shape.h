@@ -17,6 +17,7 @@ namespace shape
     {
         double x = 0.;
         double y = 0.;
+        S2d(double xx = 0, double yy = 0);
     };
 
     struct square

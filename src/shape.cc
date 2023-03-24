@@ -24,6 +24,12 @@ namespace{
     }
 }
 
+shape::S2d::S2d(double xx, double yy)
+{
+    x = xx;
+    y = yy;
+}
+
 bool shape::collision(circle C1, circle C2, bool activate_epsil_zero)
 {
     double ezero = get_value_epszero(activate_epsil_zero);
