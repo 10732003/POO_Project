@@ -49,6 +49,11 @@ public:
      * @return true if it's ok (k_update <= nbUpdate)
      */
     bool check_k_update_breakdown(int nbUpdate) const;
+
+    /**
+     * @brief get all the relevant informations in the require formate for the file
+     */
+    std::string info();
 };
 
 
@@ -68,6 +73,11 @@ public:
      * @return true/false
      */
     bool is_ok(std::vector<Reparateur> reparateur_list) const;
+
+    /**
+     * @brief get all the relevant informations in the require formate for the file
+     */
+    std::string info();
 };
 
 
@@ -125,9 +135,14 @@ public:
      * @return true if everything went well
      */
     bool data_analysis(int& vector_pos, std::vector<double> input, 
-        std::vector<Particule> &particule_list,
-        std::vector<Reparateur> &reparateur_list,
-        std::vector<Neutraliseur> &neutraliseur_list);
+                        std::vector<Particule> &particule_list,
+                        std::vector<Reparateur> &reparateur_list,
+                        std::vector<Neutraliseur> &neutraliseur_list);
+    
+    /**
+     * @brief get all the relevant informations in the require formate for the file
+     */
+    std::string info();
 };
 
 #endif /* ROBOT_H */

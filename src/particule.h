@@ -30,6 +30,11 @@ public:
      * @return true if it's allright
      */
     bool is_ok(std::vector<Particule> particule_list, bool ezero_on) const;
+
+    /**
+     * @brief get all the relevant informations in the require formate for the file
+     */
+    std::string info();
     
 };
 

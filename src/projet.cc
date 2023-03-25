@@ -10,7 +10,7 @@
 #include "simulation.h"
 
 int main(int argc, char *argv[])
-{ 
+{
     #ifdef DEBUG
     std::cout << "!!! DEBUG flag is define !!! \nPlease enter 'make clean' "
     << "and then 'make' if you want the standard version\n\n";
@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
     
     Simulation simulation(argv[1]);
     simulation.init();
+    simulation.write_file("xxx.txt");
 
     return 0;
 }

@@ -137,6 +137,32 @@ bool Neutraliseur::check_k_update_breakdown(int nbUpdate) const
     return false;
 }
 
+std::string Neutraliseur::info()
+{
+    std::string line("\t");
+    line += std::to_string(shape_.center.x);
+    line += " ";
+    line += std::to_string(shape_.center.y);
+    line += " ";
+    line += std::to_string(orientation_);
+    line += " ";
+    line += std::to_string(coordination_type_);
+    line += " ";
+    
+    if (breakdown_)
+    {
+        line += "true";
+    } else {
+        line += "false";
+    }
+    
+    line += " ";
+    line += std::to_string(k_update_breakdown_);
+    line += "\n";
+
+    return line;
+}
+
 
 // -------------------- Reparateur --------------------
 
@@ -174,6 +200,16 @@ bool Reparateur::is_ok(std::vector<Reparateur> reparateur_list) const
     return true;
 }
 
+std::string Reparateur::info()
+{
+    std::string line("\t");
+    line += std::to_string(shape_.center.x);
+    line += " ";
+    line += std::to_string(shape_.center.y);
+    line += "\n";
+
+    return line;
+}
 
 // -------------------- Spatial --------------------
 
@@ -259,4 +295,27 @@ bool Spatial::data_analysis(int& vector_pos, std::vector<double> input,
         neutraliseur_list.push_back(robot_neutra);
     }
     return true;
+}
+
+std::string Spatial::info()
+{
+    std::string line;
+    line += std::to_string(shape_.center.x);
+    line += " ";
+    line += std::to_string(shape_.center.y);
+    line += " ";
+    line += std::to_string(nbUpdate_);
+    line += " ";
+    line += std::to_string(nbNr_);
+    line += " ";
+    line += std::to_string(nbNs_);
+    line += " ";
+    line += std::to_string(nbNd_);
+    line += " ";
+    line += std::to_string(nbRr_);
+    line += " ";
+    line += std::to_string(nbRs_);
+    line += "\n";
+
+    return line;
 }

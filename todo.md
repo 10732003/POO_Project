@@ -5,7 +5,6 @@ Faut laver la petite planète des particules pas cool
 ### Todo
 
 - [ ] effectuer des tests unitaires de chaque module  
-- [ ] mettre au point une methode write de simu  
 
 ### In Progress
 
@@ -13,6 +12,7 @@ Faut laver la petite planète des particules pas cool
 
 ### Done ✓
 
+- [x] mettre au point une methode write de simu  
 - [x] ecrire la fonction set pour l'orientation ]-pi,pi] ->robot.cc  
 - [x] passer les lignes du fichier à des fct internes aux class (actuellement dans simu)  
 - [x] refactor 2-3 trucs (longeurs fct, get méthode, etc)  

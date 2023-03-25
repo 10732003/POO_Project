@@ -39,6 +39,13 @@ public:
      * @return true if everything went well
      */
     bool init();
+
+    /**
+     * @brief write a text file indicating the current state of the simulation
+     * 
+     * @param ofile string, name of the output file 
+     */
+    void write_file(std::string ofile);
 };
 
 

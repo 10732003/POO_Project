@@ -97,3 +97,16 @@ bool Particule::is_ok(std::vector<Particule> particule_list, bool ezero_on) cons
 
     return true;
 }
+
+std::string Particule::info()
+{
+    std::string line("\t");
+    line += std::to_string(shape_.center.x);
+    line += " ";
+    line += std::to_string(shape_.center.y);
+    line += " ";
+    line += std::to_string(shape_.size);
+    line += "\n";
+
+    return line;
+}

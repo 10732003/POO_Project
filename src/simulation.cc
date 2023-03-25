@@ -21,10 +21,8 @@ namespace
     void error_handler(std::string msg)
     {
         std::cout << msg;
-        if (msg == message::success())
+        if (msg != message::success())
         {
-            exit(0);
-        } else {
             exit(EXIT_FAILURE);
         }
     }
@@ -153,4 +151,43 @@ bool Simulation::init()
     error_handler(message::success());
 
     return true;
+}
+
+
+void Simulation::write_file(std::string ofile)
+{
+    std::string content("# Actual state of the simulation\n#\n");
+    content += "# Nom du scenario de test: " + filename_ + "\n#\n";
+    content += "# nombre de particules puis les donnees d une particule par ligne\n";
+
+    content += std::to_string(nbr_particules_) + "\n";
+    for (size_t i(0); i < particule_list_.size(); ++i)
+    {
+        content += particule_list_[i].info();
+    }
+    
+    content += "\n# donnees du robot spatial\n";
+    content += space_robot_.info();
+
+    content += "\n# donnees des nbRs robots reparateurs en service (un par ligne)\n";
+    for (size_t i(0); i < reparateur_list_.size(); ++i)
+    {
+        content += reparateur_list_[i].info();
+    }
+
+    content += "\n";
+    content += "# donnees des nbNs robots neutraliseurs en service (un par ligne)";
+    content += "\n";
+    for (size_t i(0); i < neutraliseur_list_.size(); ++i)
+    {
+        content += neutraliseur_list_[i].info();
+    }
+
+    std::ofstream file(ofile);
+    file << content;
+    file.close();
+
+    #ifdef DEBUG
+    std::cout << "Simulation has been reported in a file";
+    #endif
 }

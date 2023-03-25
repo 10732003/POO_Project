@@ -13,6 +13,7 @@
 
 namespace cst
 {
+    // --------------- given ---------------
     enum Etat_neutraliseur {EN_PANNE, EN_MARCHE} ;
     constexpr short unsigned maxF(25) ;
     constexpr double dmax(128.);
@@ -28,6 +29,8 @@ namespace cst
     constexpr double d_particule_min(8*shape ::epsil_zero); 
     constexpr unsigned max_update(600);
     constexpr unsigned modulo_update(100);
+
+    // --------------- our constants ---------------
     constexpr double PI(3.14159265358979323846);
 } // namespace cst
 
