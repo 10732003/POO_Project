@@ -114,11 +114,6 @@ bool Neutraliseur::is_ok(std::vector<Neutraliseur> neutraliseur_list) const
         }
     }
 
-    if (not shape::is_inside(shape_, cst::dmax))
-    {
-        std::string msg = "A neutraliseur is outside";
-        error_handler(msg);
-    }
     return true;
 }
 
@@ -166,11 +161,7 @@ bool Reparateur::is_ok(std::vector<Reparateur> reparateur_list) const
             return false;
         }
     }
-    if (not shape::is_inside(shape_, cst::dmax))
-    {
-        std::string msg = "A reparateur is outside";
-        error_handler(msg);
-    }
+
     return true;
 }
 
