@@ -7,7 +7,9 @@
  */
 
 #include <iostream>
+#include <gtkmm/application.h>
 #include "simulation.h"
+#include "gui.h"
 
 int main(int argc, char *argv[])
 {
@@ -25,6 +27,8 @@ int main(int argc, char *argv[])
     Simulation simulation(argv[1]);
     simulation.init();
     simulation.write_file("xxx.txt");
-
-    return 0;
+    
+    auto app = Gtk::Application::create("org.gtkmm.examples");
+	
+	return app->make_window_and_run<MyWindow>(1, argv);
 }

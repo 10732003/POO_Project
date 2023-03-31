@@ -5,10 +5,10 @@
  * @version 0.1
  * @brief Pour le GUI avec GTKmm4
  */
-#ifndef GRAPHICS_H
-#define GRAPHICS_H
-//#include "gtkmm.h"
+#ifndef GRAPHIC_H
+#define GRAPHIC_H
 
+#include <gtkmm.h>
 
 
 #endif /* GRAPHICS_H */

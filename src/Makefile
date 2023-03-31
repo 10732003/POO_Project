@@ -3,10 +3,12 @@
 
 # Definitions de macros
 
-CXX     = g++
-CXXFLAGS = -g -Wall -std=c++11
+CXX       = g++
+CXXFLAGS  = -Wall -std=c++17 `pkg-config --cflags gtkmm-4.0`
+LIBFLAGS   = `pkg-config --libs gtkmm-4.0`
 
-CXXFILES = message.cc particule.cc projet.cc robot.cc shape.cc simulation.cc
+CXXFILES = message.cc particule.cc projet.cc robot.cc shape.cc \
+simulation.cc graphic.cc gui.cc
 
 OFILES = $(CXXFILES:.cc=.o)
 
@@ -21,17 +23,7 @@ debug: all
 # Definition de la premiere regle
 
 prog: $(OFILES)
-	$(CXX) $(OFILES) -o projet
-
-# Definitions de cibles particulieres
-
-depend:
-	@echo " *** MISE A JOUR DES DEPENDANCES ***"
-	@(sed '/^# DO NOT DELETE THIS LINE/q' Makefile && \
-	  $(CXX) -MM $(CXXFLAGS) $(CXXFILES) | \
-	  egrep -v "/usr/include" \
-	 ) >Makefile.new
-	@mv Makefile.new Makefile
+	$(CXX) $(OFILES) -o projet $(LIBFLAGS)
 
 clean:
 	@echo " *** EFFACE MODULES OBJET ET EXECUTABLE ***"
@@ -42,9 +34,12 @@ clean:
 #
 # DO NOT DELETE THIS LINE
 message.o: message.cc message.h
-particule.o: particule.cc particule.h shape.h message.h constantes.h
-projet.o: projet.cc simulation.h particule.h shape.h robot.h
-robot.o: robot.cc robot.h shape.h particule.h message.h constantes.h
-shape.o: shape.cc shape.h
+particule.o: particule.cc particule.h shape.h message.h constantes.h graphic.h
+projet.o: projet.cc simulation.h particule.h shape.h robot.h graphic.h
+robot.o: robot.cc robot.h shape.h particule.h message.h constantes.h graphic.h
+shape.o: shape.cc shape.h graphic.h
 simulation.o: simulation.cc simulation.h particule.h shape.h robot.h \
- message.h
+ message.h graphic.h
+gui.o: gui.cc gui.h graphic.h simulation.h robot.h robot.h particule.h message.h \
+ shape.h
+graphic.o: graphic.cc graphic.h
